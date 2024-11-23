@@ -1,0 +1,7 @@
+{
+  "block.stellar.stellar_generator": "ステラ熱発電機",
+  "container.stellar.stellar_generator": "ステラ熱発電機",
+  "description.stellar.stellar_generator": "もっとアツくなれよおおおおおおおおおおおおおおおおおおおおおおお",
+  "gui.stellar.heat.loss": "冷却: %s/t",
+  "gui.stellar.cooling.target": "冷却目標: %s"
+}

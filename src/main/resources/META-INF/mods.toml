@@ -1,0 +1,15 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version}"
+license = "MIT"
+[[mods]]
+modId = "stellar"
+version = "${version}"
+displayName = "Mekanism Stellar"
+authors = "Pascallite"
+credits = "Valine3g and members of the Valine3g Discord server"
+description = '''Stellar is a Mekanism addon.'''
+[[dependencies.stellar]]
+modId = "mekanism"
+mandatory = true
+versionRange = "${mekanism_version}"
+side = "BOTH"

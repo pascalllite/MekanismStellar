@@ -1,0 +1,7 @@
+{
+  "block.stellar.stellar_generator": "Stellar Heat Generator",
+  "container.stellar.stellar_generator": "Stellar Heat Generator",
+  "description.stellar.stellar_generator": "Get even hotter and hotter and hotter and HOTTTTTTTTTTTTTTTTTTTTTTTTTTTTTER!!!!!!!!",
+  "gui.stellar.heat.loss": "Heat Loss: %s/t",
+  "gui.stellar.cooling.target": "Cooling Target: %s"
+}
