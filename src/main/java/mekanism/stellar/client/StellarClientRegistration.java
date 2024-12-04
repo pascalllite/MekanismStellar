@@ -1,6 +1,7 @@
 package mekanism.stellar.client;
 
 import mekanism.client.ClientRegistrationUtil;
+import mekanism.stellar.client.gui.GuiEternalHeatGenerator;
 import mekanism.stellar.client.gui.GuiStellarGenerator;
 import mekanism.stellar.common.Stellar;
 import mekanism.stellar.common.registries.StellarBlocks;
@@ -27,6 +28,7 @@ public class StellarClientRegistration {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerContainers(RegistryEvent.Register<MenuType<?>> event) {
         ClientRegistrationUtil.registerScreen(StellarContainerTypes.STELLAR_GENERATOR, GuiStellarGenerator::new);
+        ClientRegistrationUtil.registerScreen(StellarContainerTypes.ETERNAL_HEAT_GENERATOR, GuiEternalHeatGenerator::new);
     }
 
 }
