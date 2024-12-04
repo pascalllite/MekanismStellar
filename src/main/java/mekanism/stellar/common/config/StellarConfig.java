@@ -6,6 +6,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 
 public class StellarConfig {
     public static final StellarMachineConfig machine = new StellarMachineConfig();
+    public static final StellarEternalHeatGeneratorConfig eternalHeatGenerator = new StellarEternalHeatGeneratorConfig();
 
     private StellarConfig() {
     }
@@ -13,5 +14,6 @@ public class StellarConfig {
     public static void registerConfigs(ModLoadingContext modLoadingContext) {
         ModContainer modContainer = modLoadingContext.getActiveContainer();
         MekanismConfigHelper.registerConfig(modContainer, machine);
+        MekanismConfigHelper.registerConfig(modContainer, eternalHeatGenerator);
     }
 }
