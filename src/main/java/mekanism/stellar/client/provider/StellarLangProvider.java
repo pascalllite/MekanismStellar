@@ -1,4 +1,4 @@
-package mekanism.stellar.client;
+package mekanism.stellar.client.provider;
 
 import mekanism.api.gear.ModuleData;
 import mekanism.api.providers.IBlockProvider;
@@ -6,6 +6,9 @@ import mekanism.api.providers.IModuleDataProvider;
 import mekanism.api.text.IHasTranslationKey;
 import mekanism.common.block.attribute.Attribute;
 import mekanism.common.block.attribute.AttributeGui;
+import mekanism.stellar.common.Stellar;
+import mekanism.stellar.common.StellarLang;
+import mekanism.stellar.common.registries.StellarBlocks;
 import net.minecraft.Util;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
@@ -15,18 +18,40 @@ import net.minecraftforge.common.data.LanguageProvider;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
-public abstract class BaseLanguageProvider extends LanguageProvider {
-    private final String modid;
+public class StellarLangProvider extends LanguageProvider {
 
-    public BaseLanguageProvider(DataGenerator gen, String modid) {
-        super(gen, modid, "en_us");
-        this.modid = modid;
+    private final ConvertibleLanguageProvider[] altProviders;
+
+    public StellarLangProvider(DataGenerator gen) {
+        super(gen, Stellar.MODID, "en_us");
+        altProviders = new ConvertibleLanguageProvider[]{
+                new UpsideDownLanguageProvider(gen, Stellar.MODID),
+        };
+    }
+
+    @Override
+    protected void addTranslations() {
+        addBlocks();
+        addMisc();
+    }
+
+    public void addBlocks() {
+        add(StellarBlocks.STELLAR_GENERATOR, "Stellar Generator");
+        add(StellarBlocks.ETERNAL_HEAT_GENERATOR, "Eternal Heat Generator");
+    }
+
+    public void addMisc() {
+        add(StellarLang.HEAT_LOSS, "Heat Loss: %1$s/t");
+        add(StellarLang.COOLING_TARGET, "Cooling Target: %1$s");
+
+        add(StellarLang.DESCRIPTION_STELLAR_GENERATOR, "Get even hotter and hotter and hotter and HOTTTTTTTTTTTTTTTTTTTTTTTTTTTTTER!!!!!!!!");
+        add(StellarLang.DESCRIPTION_ETERNAL_HEAT_GENERATOR, "Over using the power of Mekanism...");
     }
 
     @Nonnull
     @Override
     public String getName() {
-        return super.getName() + ": " + modid;
+        return super.getName() + ": " + Stellar.MODID;
     }
 
     protected void add(IHasTranslationKey key, String value) {
@@ -61,10 +86,19 @@ public abstract class BaseLanguageProvider extends LanguageProvider {
             throw new IllegalArgumentException("Values containing substitutions should use explicit numbered indices: " + key + " - " + value);
         }
         super.add(key, value);
+        if (altProviders.length > 0) {
+            List<Component> splitEnglish = FormatSplitter.split(value);
+            for (ConvertibleLanguageProvider provider : altProviders) {
+                provider.convert(key, splitEnglish);
+            }
+        }
     }
 
     @Override
     public void run(@Nonnull HashCache cache) throws IOException {
         super.run(cache);
+        for (ConvertibleLanguageProvider provider : altProviders) {
+            provider.run(cache);
+        }
     }
 }

@@ -1,10 +1,13 @@
-package mekanism.stellar.client;
+package mekanism.stellar.client.provider;
 
 import mekanism.stellar.common.Stellar;
 import net.minecraft.data.DataGenerator;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class StellarItemModelProvider extends BaseItemModelProvider {
+import javax.annotation.Nonnull;
+
+public class StellarItemModelProvider extends ItemModelProvider {
 
     public StellarItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, Stellar.MODID, existingFileHelper);
@@ -13,5 +16,11 @@ public class StellarItemModelProvider extends BaseItemModelProvider {
     @Override
     protected void registerModels() {
 
+    }
+
+    @Nonnull
+    @Override
+    public String getName() {
+        return "Item model provider: " + modid;
     }
 }

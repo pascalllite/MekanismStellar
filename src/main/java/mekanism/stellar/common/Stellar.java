@@ -4,12 +4,17 @@ import mekanism.common.Mekanism;
 import mekanism.common.base.IModModule;
 import mekanism.common.config.MekanismModConfig;
 import mekanism.common.lib.Version;
+import mekanism.stellar.client.provider.StellarBlockStateProvider;
+import mekanism.stellar.client.provider.StellarItemModelProvider;
+import mekanism.stellar.client.provider.StellarLangProvider;
 import mekanism.stellar.common.config.StellarConfig;
 import mekanism.stellar.common.network.StellarPacketHandler;
 import mekanism.stellar.common.registries.StellarBlocks;
 import mekanism.stellar.common.registries.StellarContainerTypes;
 import mekanism.stellar.common.registries.StellarTileEntityTypes;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -17,11 +22,12 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 
 @Mod(Stellar.MODID)
 public class Stellar implements IModModule {
-    public static final String MODID = "stellar";
+    public static final String MODID = "mekanism/stellar";
 
     public static Stellar instance;
     public final Version versionNumber;
@@ -34,6 +40,7 @@ public class Stellar implements IModModule {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::onConfigLoad);
+        modEventBus.addListener(this::gatherData);
 
         StellarBlocks.BLOCKS.register(modEventBus);
         StellarContainerTypes.CONTAINER_TYPES.register(modEventBus);
@@ -54,6 +61,24 @@ public class Stellar implements IModModule {
     private void commonSetup(FMLCommonSetupEvent event) {
         packetHandler.initialize();
         Mekanism.logger.info("Loaded 'Mekanism Stellar' module.");
+    }
+
+    public void gatherData(GatherDataEvent event) {
+        DataGenerator gen = event.getGenerator();
+        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+
+        if (event.includeClient()) {
+            gen.addProvider(new StellarLangProvider(gen));
+            StellarItemModelProvider itemModelProvider = new StellarItemModelProvider(gen, existingFileHelper);
+            gen.addProvider(itemModelProvider);
+            gen.addProvider(new StellarBlockStateProvider(gen, itemModelProvider.existingFileHelper));
+        }
+
+        if (event.includeServer()) {
+            // gen.addProvider(new StellarTagProvider(gen, existingFileHelper));
+            // gen.addProvider(new StellarLootProvider(gen));
+            // gen.addProvider(new StellarRecipeProvider(gen));
+        }
     }
 
     @Override
