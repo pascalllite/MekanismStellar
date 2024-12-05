@@ -18,17 +18,11 @@ import net.minecraftforge.common.data.LanguageProvider;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.util.List;
 
-public class StellarLangProvider extends LanguageProvider {
+public class StellarLangProviderJa extends LanguageProvider {
 
-    private final ConvertibleLanguageProvider[] altProviders;
-
-    public StellarLangProvider(DataGenerator gen) {
-        super(gen, Stellar.MODID, "en_us");
-        altProviders = new ConvertibleLanguageProvider[]{
-                new UpsideDownLanguageProvider(gen, Stellar.MODID),
-        };
+    public StellarLangProviderJa(DataGenerator gen) {
+        super(gen, Stellar.MODID, "ja_jp");
     }
 
     @Override
@@ -38,23 +32,23 @@ public class StellarLangProvider extends LanguageProvider {
     }
 
     public void addBlocks() {
-        add(StellarBlocks.STELLAR_GENERATOR, "Stellar Generator");
-        add(StellarBlocks.ETERNAL_HEAT_GENERATOR, "Eternal Heat Generator");
+        add(StellarBlocks.STELLAR_GENERATOR, "ステラ熱発電機");
+        add(StellarBlocks.ETERNAL_HEAT_GENERATOR, "永久熱熱発電機");
 
         for (CompressedEternalHeatGenerators type : CompressedEternalHeatGenerators.values()) {
-            add(StellarBlocks.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type), type.si() + " Compressed Eternal Heat Generator");
+            add(StellarBlocks.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type), type.numeral() + "倍圧縮永久熱熱発電機");
         }
     }
 
     public void addMisc() {
-        add(StellarLang.HEAT_LOSS, "Heat Loss: %1$s/t");
-        add(StellarLang.COOLING_TARGET, "Cooling Target: %1$s");
+        add(StellarLang.HEAT_LOSS, "冷却量: %1$s/t");
+        add(StellarLang.COOLING_TARGET, "冷却目標: %1$s");
 
-        add(StellarLang.DESCRIPTION_STELLAR_GENERATOR, "Get even hotter and hotter and hotter and HOTTTTTTTTTTTTTTTTTTTTTTTTTTTTTER!!!!!!!!");
-        add(StellarLang.DESCRIPTION_ETERNAL_HEAT_GENERATOR, "Maxwell's intelligent incommensurable demon");
+        add(StellarLang.DESCRIPTION_STELLAR_GENERATOR, "もっとアツくなれよおおおおおおおおおおおおおおおおおおおおおおお");
+        add(StellarLang.DESCRIPTION_ETERNAL_HEAT_GENERATOR, "マクスウェルの賢く『桁違い』な悪魔");
 
         for (CompressedEternalHeatGenerators type : CompressedEternalHeatGenerators.values()) {
-            add(StellarLang.DESCRIPTION_COMPRESSED_ETERNAL_HEAT_GENERATOR.type(type), type.description());
+            add(StellarLang.DESCRIPTION_COMPRESSED_ETERNAL_HEAT_GENERATOR.type(type), type.descriptionJa());
         }
     }
 
@@ -96,19 +90,10 @@ public class StellarLangProvider extends LanguageProvider {
             throw new IllegalArgumentException("Values containing substitutions should use explicit numbered indices: " + key + " - " + value);
         }
         super.add(key, value);
-        if (altProviders.length > 0) {
-            List<FormatSplitter.Component> splitEnglish = FormatSplitter.split(value);
-            for (ConvertibleLanguageProvider provider : altProviders) {
-                provider.convert(key, splitEnglish);
-            }
-        }
     }
 
     @Override
     public void run(@Nonnull HashCache cache) throws IOException {
         super.run(cache);
-        for (ConvertibleLanguageProvider provider : altProviders) {
-            provider.run(cache);
-        }
     }
 }

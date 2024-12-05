@@ -19,11 +19,7 @@ plugins {
 sourceSets {
     main {
         resources {
-            include '**/**'
-            exclude '**/*.blend'
-            exclude '**/*.bbmodel'
-            srcDirs += ['src/generated/resources']
-            exclude '.cache'
+            srcDir 'src/generated/resources'
         }
     }
 }
@@ -55,40 +51,27 @@ minecraft {
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
-        client {
-            workingDirectory file('run')
+        configureEach {
+            workingDirectory project.file('run')
             mods {
-                stellar {
+                "stellar" {
                     source sourceSets.main
                 }
             }
+        }
+        client {
         }
         server {
-            workingDirectory file('run')
-            mods {
-                stellar {
-                    source sourceSets.main
-                }
-            }
+            args "--nogui"
         }
         gameTestServer {
-            workingDirectory file('run')
-            mods {
-                stellar {
-                    source sourceSets.main
-                }
-            }
         }
         data {
-            workingDirectory file('run')
-            mods {
-                stellar {
-                    source sourceSets.main
-                }
-            }
-            environment 'targe', 'fmluserdevdata'
+            property 'forge.logging.markers', 'REGISTRIES'
 
-            args '--mod', 'stellar', '--all', '--output', file('src/datagen/generated/'), '--existing', file('src/main/resources/')
+            environment 'target', 'fmluserdevdata'
+
+            args '--mod', 'stellar', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
         }
     }
 }
