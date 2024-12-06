@@ -13,3 +13,7 @@ modId = "mekanism"
 mandatory = true
 versionRange = "${mekanism_version}"
 side = "BOTH"
+[[dependencies.stellar]]
+modId = "mekanismgenerators"
+versionRange = "${mekanism_version}"
+side = "BOTH"

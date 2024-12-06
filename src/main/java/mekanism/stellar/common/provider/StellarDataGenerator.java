@@ -1,9 +1,6 @@
 package mekanism.stellar.common.provider;
 
-import mekanism.stellar.client.provider.StellarBlockStateProvider;
-import mekanism.stellar.client.provider.StellarItemModelProvider;
-import mekanism.stellar.client.provider.StellarLangProvider;
-import mekanism.stellar.client.provider.StellarLangProviderJa;
+import mekanism.stellar.client.provider.*;
 import mekanism.stellar.common.Stellar;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -24,9 +21,9 @@ public class StellarDataGenerator {
         if (event.includeClient()) {
             gen.addProvider(new StellarLangProvider(gen));
             gen.addProvider(new StellarLangProviderJa(gen));
-            StellarItemModelProvider itemModelProvider = new StellarItemModelProvider(gen, existingFileHelper);
-            gen.addProvider(itemModelProvider);
-            gen.addProvider(new StellarBlockStateProvider(gen, itemModelProvider.existingFileHelper));
+            gen.addProvider(new StellarBlockModelProvider(gen, existingFileHelper));
+            gen.addProvider(new StellarItemModelProvider(gen, existingFileHelper));
+            gen.addProvider(new StellarBlockStateProvider(gen, existingFileHelper));
         }
 
         if (event.includeServer()) {
