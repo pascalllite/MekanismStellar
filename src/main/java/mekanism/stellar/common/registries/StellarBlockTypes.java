@@ -37,24 +37,16 @@ public class StellarBlockTypes {
             .createGenerator(() -> StellarTileEntityTypes.ETERNAL_HEAT_GENERATOR, StellarLang.DESCRIPTION_ETERNAL_HEAT_GENERATOR)
             .withGui(() -> StellarContainerTypes.ETERNAL_HEAT_GENERATOR)
             .withEnergyConfig(StellarConfig.eternalHeatGenerator.capacity)
-            .withCustomShape((BlockShapes.HEAT_GENERATOR))
             .withSound(GeneratorsSounds.HEAT_GENERATOR)
             .withSupportedUpgrades(EnumSet.of(Upgrade.MUFFLING))
-            .with(new AttributeParticleFX()
-                    .add(ParticleTypes.SMOKE, rand -> new Pos3D(rand.nextFloat() * 0.6F - 0.3F, rand.nextFloat() * 6.0F / 16.0F, -0.52))
-                    .add(ParticleTypes.FLAME, rand -> new Pos3D(rand.nextFloat() * 0.6F - 0.3F, rand.nextFloat() * 6.0F / 16.0F, -0.52)))
             .build();
 
     public static final EnumMap<CompressedEternalHeatGenerators, Generator<TileEntityCompressedEternalHeatGenerator>> COMPRESSED_ETERNAL_HEAT_GENERATORS = Stream.of(CompressedEternalHeatGenerators.values()).collect(Collectors.toMap(UnaryOperator.identity(), type -> Generator.GeneratorBuilder
             .createGenerator(() -> StellarTileEntityTypes.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type), type)
             .withGui(() -> StellarContainerTypes.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type))
             .withEnergyConfig(StellarConfig.eternalHeatGenerator.compressedCapacities.get(type))
-            .withCustomShape((BlockShapes.HEAT_GENERATOR))
             .withSound(GeneratorsSounds.HEAT_GENERATOR)
             .withSupportedUpgrades(EnumSet.of(Upgrade.MUFFLING))
-            .with(new AttributeParticleFX()
-                    .add(ParticleTypes.SMOKE, rand -> new Pos3D(rand.nextFloat() * 0.6F - 0.3F, rand.nextFloat() * 6.0F / 16.0F, -0.52))
-                    .add(ParticleTypes.FLAME, rand -> new Pos3D(rand.nextFloat() * 0.6F - 0.3F, rand.nextFloat() * 6.0F / 16.0F, -0.52)))
             .build(), (a, b) -> a, () -> new EnumMap<>(CompressedEternalHeatGenerators.class)));
 
     private StellarBlockTypes() {
