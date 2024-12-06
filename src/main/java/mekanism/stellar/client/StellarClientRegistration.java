@@ -6,16 +6,21 @@ import mekanism.common.inventory.container.tile.MekanismTileContainer;
 import mekanism.stellar.client.gui.GuiCompressedEternalHeatGenerator;
 import mekanism.stellar.client.gui.GuiEternalHeatGenerator;
 import mekanism.stellar.client.gui.GuiStellarGenerator;
+import mekanism.stellar.client.render.RenderCompressedEternalHeatGenerator;
+import mekanism.stellar.client.render.RenderEternalHeatGenerator;
+import mekanism.stellar.client.render.RenderStellarGenerator;
 import mekanism.stellar.common.CompressedEternalHeatGenerators;
 import mekanism.stellar.common.Stellar;
 import mekanism.stellar.common.registries.StellarBlocks;
 import mekanism.stellar.common.registries.StellarContainerTypes;
+import mekanism.stellar.common.registries.StellarTileEntityTypes;
 import mekanism.stellar.common.tile.TileEntityCompressedEternalHeatGenerator;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -39,6 +44,15 @@ public class StellarClientRegistration {
             objects.add(StellarBlocks.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type));
         }
         ClientRegistrationUtil.setRenderLayer(renderType -> renderType == RenderType.solid() || renderType == RenderType.translucent(), objects.toArray(IBlockProvider[]::new));
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(StellarTileEntityTypes.STELLAR_GENERATOR.get(), RenderStellarGenerator::new);
+        event.registerBlockEntityRenderer(StellarTileEntityTypes.ETERNAL_HEAT_GENERATOR.get(), RenderEternalHeatGenerator::new);
+        for (CompressedEternalHeatGenerators type : CompressedEternalHeatGenerators.values()) {
+            event.registerBlockEntityRenderer(StellarTileEntityTypes.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type), () -> new RenderCompressedEternalHeatGenerator(type));
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
