@@ -24,7 +24,7 @@ sourceSets {
     }
 }
 
-version = "${mod_version}"
+version = "${minecraft_version}-${mod_version}-forge"
 group = 'mekanism'
 archivesBaseName = 'Stellar'
 

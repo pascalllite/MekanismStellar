@@ -5,7 +5,6 @@ import mekanism.stellar.common.Stellar;
 import mekanism.stellar.common.registries.StellarBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -18,11 +17,9 @@ public class StellarBlockModelProvider extends BlockModelProvider {
 
     @Override
     protected void registerModels() {
-        var original = new ExistingModelFile(mcLoc(StellarBlocks.ETERNAL_HEAT_GENERATOR.getName()), existingFileHelper);
+        var original = modLoc("block/" + StellarBlocks.ETERNAL_HEAT_GENERATOR.getName());
         for (CompressedEternalHeatGenerators type : CompressedEternalHeatGenerators.values()) {
-            getBuilder(StellarBlocks.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type).getName())
-                    .parent(original)
-                    .texture("all", StellarBlocks.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type).getName());
+            withExistingParent(StellarBlocks.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type).getName(), original);
         }
     }
 

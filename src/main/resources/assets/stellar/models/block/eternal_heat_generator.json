@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "stellar:blocks/eternal_heat_generator"
+    "all": "stellar:block/eternal_heat_generator"
   }
 }

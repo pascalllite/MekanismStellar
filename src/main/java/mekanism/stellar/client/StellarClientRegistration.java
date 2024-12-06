@@ -51,7 +51,7 @@ public class StellarClientRegistration {
         event.registerBlockEntityRenderer(StellarTileEntityTypes.STELLAR_GENERATOR.get(), RenderStellarGenerator::new);
         event.registerBlockEntityRenderer(StellarTileEntityTypes.ETERNAL_HEAT_GENERATOR.get(), RenderEternalHeatGenerator::new);
         for (CompressedEternalHeatGenerators type : CompressedEternalHeatGenerators.values()) {
-            event.registerBlockEntityRenderer(StellarTileEntityTypes.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type), () -> new RenderCompressedEternalHeatGenerator(type));
+            event.registerBlockEntityRenderer(StellarTileEntityTypes.COMPRESSED_ETERNAL_HEAT_GENERATORS.get(type).get(), (context) -> new RenderCompressedEternalHeatGenerator(context, type));
         }
     }
 
