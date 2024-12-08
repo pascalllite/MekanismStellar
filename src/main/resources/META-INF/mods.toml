@@ -15,5 +15,6 @@ versionRange = "${mekanism_version}"
 side = "BOTH"
 [[dependencies.stellar]]
 modId = "mekanismgenerators"
+mandatory = true
 versionRange = "${mekanism_version}"
 side = "BOTH"
