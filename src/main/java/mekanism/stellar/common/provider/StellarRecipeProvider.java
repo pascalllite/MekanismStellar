@@ -89,11 +89,10 @@ public class StellarRecipeProvider extends RecipeProvider {
         ExtendedShapedRecipeBuilder.shapedRecipe(StellarBlocks.ETERNAL_HEAT_GENERATOR)
                 .pattern(RecipePattern.createPattern(
                         RecipePattern.TripleLine.of('M', 'M', 'M'),
-                        RecipePattern.TripleLine.of('M', 'T', 'M'),
-                        RecipePattern.TripleLine.of('M', 'H', 'M')))
+                        RecipePattern.TripleLine.of('M', 'H', 'M'),
+                        RecipePattern.TripleLine.of('M', 'M', 'M')))
                 .key('H', GeneratorsBlocks.HEAT_GENERATOR)
                 .key('M', Blocks.MAGMA_BLOCK)
-                .key('T', MekanismItems.TELEPORTATION_CORE)
                 .build(consumer, Stellar.rl("eternal_heat_generator"));
     }
 
